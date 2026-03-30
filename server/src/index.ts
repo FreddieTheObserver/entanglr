@@ -1,2 +1,8 @@
-const PORT = process.env.PORT || 3000;
-console.log(`entanglr server starting on port ${PORT}`);
+import { createApp } from "./app.js";
+import { env } from './config/env.js';
+
+const app = createApp();
+
+app.listen(env.PORT, () => {
+      console.log(`entanglr server running on port ${env.PORT}`);
+});

@@ -3,7 +3,7 @@ import { Response } from 'express';
 export function successResponse<T>(
   res: Response,
   data: T,
-  message: 'Success',
+  message = 'Success',
   statusCode = 200,
 ) {
   res.status(statusCode).json({
@@ -16,7 +16,7 @@ export function successResponse<T>(
 export function createdResponse<T>(
   res: Response,
   data: T,
-  message: 'Created successfully',
+  message = 'Created successfully',
 ) {
   successResponse(res, data, message, 201);
 }
