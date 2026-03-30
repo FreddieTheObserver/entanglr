@@ -1,12 +1,12 @@
 import { ErrorRequestHandler } from 'express';
-import { ApiErorr } from '../lib/apiError.js';
+import { ApiError } from '../lib/apiError.js';
 import { env } from '../config/env.js';
 
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
-      if (err instanceof ApiErorr) {
+      if (err instanceof ApiError) {
             res.status(err.statusCode).json({
                   success: false,
-                  message: err.message;
+                  message: err.message,
             });
             return;
       }

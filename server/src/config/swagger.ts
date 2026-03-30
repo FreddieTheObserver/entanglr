@@ -1,19 +1,19 @@
 import {
-  extendZodWithOpenAPI,
+  extendZodWithOpenApi,
   OpenAPIRegistry,
-  OpenAPIGeneratorV31,
+  OpenApiGeneratorV31,
 } from '@asteasolutions/zod-to-openapi';
 
 import { z } from 'zod';
 import { Router } from 'express';
 import swaggerUi from 'swagger-ui-express';
 
-extendZodWithOpenAPI(z);
+extendZodWithOpenApi(z);
 
 export const registry = new OpenAPIRegistry();
 
 export function createSwaggerRouter(): Router {
-  const generator = new OpenAPIGeneratorV31(registry.definitions);
+  const generator = new OpenApiGeneratorV31(registry.definitions);
   const document = generator.generateDocument({
     openapi: '3.1.0',
     info: {
