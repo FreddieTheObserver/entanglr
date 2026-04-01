@@ -38,3 +38,28 @@ export async function loginController(
             next(error);
       }
 }
+
+export async function logoutController(
+      _req: Request,
+      res: Response,
+      next: NextFunction,
+) {
+      try {
+            res.clearCookie('token', { path: '/' });
+            successResponse(res, null, 'Logged out successfully');
+      } catch (error) {
+            next(error);
+      }
+}
+
+export async function getMeController(
+      req: Request,
+      res: Response,
+      next: NextFunction,
+) {
+      try {
+            successResponse(res, { user: authService.toSafeUser(req.user) });
+      } catch (error) {
+            next(error);
+      }
+}
