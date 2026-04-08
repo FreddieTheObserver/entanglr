@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import { AnyZodObject, ZodError } from 'zod';
+import { z } from 'zod';
 import { ApiError } from '../lib/apiError.js';
 
 interface ValidationSchemas {
-      body?: AnyZodObject;
-      query?: AnyZodObject;
-      params?: AnyZodObject;
+      body?: z.ZodType;
+      query?: z.ZodType;
+      params?: z.ZodType;
 }
 
 export function validate(schemas: ValidationSchemas) {
@@ -15,16 +15,16 @@ export function validate(schemas: ValidationSchemas) {
                         req.body = schemas.body.parse(req.body);
                   }
                   if (schemas.query) {
-                        req.query = schemas.query.parse(req.query);
+                        req.query = schemas.query.parse(req.query) as typeof req.query;
                   }
                   if (schemas.params) {
-                        req.params = schemas.params.parse(req.params);
+                        req.params = schemas.params.parse(req.params) as typeof req.params;
                   }
                   next();
             } catch (error) {
-                  if (error instanceof ZodError) {
-                        const message = error.errors
-                              .map((e) => `${e.path.join('.')}: ${e.message}`)
+                  if (error instanceof z.ZodError) {
+                        const message = error.issues
+                              .map((e: z.ZodIssue) => `${e.path.join('.')}: ${e.message}`)
                               .join(', ');
                         next(ApiError.badRequest(message));
                   } else {

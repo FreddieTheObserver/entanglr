@@ -12,7 +12,8 @@ model User {
       email                   String                        @unique
       username                String                        @unique
       displayName             String 
-      passwordHash            String 
+      passwordHash            String
+      tokenVersion            Int                           @default(0)
       avatarUrl               String?
       bio                     String?                       @default("")
       lastSeenAt              DateTime                      @default(now())

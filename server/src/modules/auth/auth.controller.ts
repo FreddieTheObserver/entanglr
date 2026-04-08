@@ -26,7 +26,7 @@ export async function registerController(
 }
 
 export async function loginController(
-      req: Request, 
+      req: Request,
       res: Response,
       next: NextFunction,
 ) {
@@ -40,11 +40,12 @@ export async function loginController(
 }
 
 export async function logoutController(
-      _req: Request,
+      req: Request,
       res: Response,
       next: NextFunction,
 ) {
       try {
+            await authService.bumpTokenVersion(req.user.id);
             res.clearCookie('token', { path: '/' });
             successResponse(res, null, 'Logged out successfully');
       } catch (error) {
@@ -58,7 +59,7 @@ export async function getMeController(
       next: NextFunction,
 ) {
       try {
-            successResponse(res, { user: authService.toSafeUser(req.user) });
+            successResponse(res, { user: req.user });
       } catch (error) {
             next(error);
       }

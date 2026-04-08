@@ -13,7 +13,7 @@ const authRouter = Router();
 
 authRouter.post('/register', validate({ body: registerInputSchema }), registerController);
 authRouter.post('/login', validate({ body: loginInputSchema }), loginController);
-authRouter.post('/logout', logoutController);
+authRouter.post('/logout', authenticate, logoutController);
 authRouter.get('/me', authenticate, getMeController);
 
 export default authRouter;

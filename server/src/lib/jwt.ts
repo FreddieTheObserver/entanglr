@@ -3,6 +3,7 @@ import { env } from '../config/env.js';
 
 interface TokenPayload {
       userId: string;
+      tokenVersion: number;
 }
 
 export function signToken(payload: TokenPayload): string {
